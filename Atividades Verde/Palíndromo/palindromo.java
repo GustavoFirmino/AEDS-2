@@ -1,25 +1,28 @@
 import java.util.*;
 
-class palindromo{
-    public static void main(String[] args){
+class palindromo {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String palavra = sc.nextLine();
-        int tamanho = palavra.length();
-        int cont = 0;
+        while (sc.hasNextLine()) {
+            String palavra = sc.nextLine();
+            if (palavra == "FIM") {
+                break;
+            }
+            String contrario = "";
 
-        while(palavra != "FIM"){
-            for(int i=0; i>=tamanho-1; i++,tamanho--){
-                if(palavra.charAt(i)==palavra.charAt(tamanho-1)){
-                    cont++;
-                }
+            for (int i = palavra.length() - 1; i > 0; i--) {
+                contrario += palavra.charAt(i);
             }
-            if(cont == tamanho/2){
+
+            if (palavra.equals(contrario)) {
                 System.out.println("SIM");
-            }
-            else if(cont != tamanho/2){
+            } else {
                 System.out.println("NAO");
             }
+            
+
         }
         sc.close();
     }
+
 }
