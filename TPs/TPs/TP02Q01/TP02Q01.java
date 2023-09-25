@@ -1,11 +1,5 @@
 import java.util.*;
 
-public class TP02Q01 {
-public static void main(String[] args) {
-    
-}
-    
-}
 
 class Jogador{
     private int id;
@@ -67,14 +61,6 @@ class Jogador{
     }
 
     public Jogador(){
-        int id = 0;
-        String nome = "";
-        int altura = 0;
-        int peso = 0;
-        String universidade = "";
-        int anoNascimento = 0;
-        String cidadeNascimento = "";
-        String estadoNascimento = "";
     }
     public Jogador(int id, String nome, int altura, int peso, String universidade, int anoNascimento, String cidadeNascimento, String estadoNascimento){
         this.id = id;
@@ -86,6 +72,53 @@ class Jogador{
         this.cidadeNascimento = cidadeNascimento;
         this.estadoNascimento = estadoNascimento;
     }
+    
+    public Jogador clone() {
+        return new Jogador(id, nome, altura, peso, universidade, anoNascimento,
+                cidadeNascimento, estadoNascimento);
+    }
+    
+    public void Ler(Scanner scanner) {
+        this.id = scanner.nextInt();
+        this.nome = scanner.next();
+        this.altura = scanner.nextInt();
+        this.peso = scanner.nextInt();
+        this.universidade = scanner.next();
+        this.anoNascimento = scanner.nextInt();
+        this.cidadeNascimento = scanner.next();
+        this.estadoNascimento = scanner.next();
+    }
+
+    public void Imprimir(){
+        System.out.println("[" + id + "##" + nome + "##" + altura + "##" + peso + "##" + anoNascimento + "##" + universidade + "##" + cidadeNascimento + "##" + estadoNascimento + "]");
+    }
 
 
+}
+
+public class TP02Q01 {
+    
+     public static boolean isFim(String s) {
+        return (s.length() <= 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I'
+                && s.charAt(2) == 'M');
+    }
+    
+    
+    public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    String idStr;
+    Jogador jogador;
+    
+    idStr = sc.next();
+    
+    while(isFim(idStr) == false){
+        
+        
+        jogador = new Jogador();
+        jogador.Ler(sc);
+        jogador.Imprimir();
+        idStr = sc.next();
+    }
+    sc.close();
+        }
 }
