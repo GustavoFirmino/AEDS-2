@@ -1,0 +1,110 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+import java.io.IOException;
+
+/**
+ * IMPORTANT: 
+ *      O nome da classe deve ser "Main" para que a sua solução execute
+ *      Class name must be "Main" for your solution to execute
+ *      El nombre dle la case debe ser "Main" para que su solución ejecutar
+ */
+
+public Racional() {
+	
+}
+
+public Racional(int numerador, int denominador) {
+	setNumerador(numerador);
+	setDenominador(denominador);
+}
+
+public int getNumerador() {
+	return numerador;
+}
+
+public void setNumerador(int numerador) {
+	this.numerador = numerador;
+}
+
+public int getDenominador() {
+	return denominador;
+}
+
+public void setDenominador(int denominador) {
+	if(denominador == 0) {
+		denominador = 1;
+	}
+	this.denominador = denominador;
+}
+
+public String exibirComBarras() {
+	return numerador + "/" + denominador;
+}
+
+public String exibirComDecimais() {
+	return String.valueOf((double) numerador / denominador);
+}
+
+public void simplificar() {
+	int menor = Math.min(numerador, denominador);
+	boolean primosEntreSi = false;
+	while(!primosEntreSi) {
+		primosEntreSi = true;
+		for(int i = 2; i <= menor; i++) {
+			if(numerador % i == 0 && denominador % i == 0) {
+				primosEntreSi = false;
+				setNumerador(numerador / i);
+				setDenominador(denominador / i);
+				menor = Math.min(numerador, denominador);
+				break;
+			}
+		}
+	}
+}
+
+public Racional soma(Racional outroRacional) {
+	int mmc = mmc(denominador, outroRacional.getDenominador());
+	int numerador = ((mmc / denominador) * this.numerador) + 
+		((mmc / outroRacional.getDenominador()) * outroRacional.getNumerador());
+	Racional resultado = new Racional(numerador, mmc);
+	
+	return resultado;
+}
+
+public int mmc(int a, int b) {
+	if(a % b == 0) {
+		return a;
+	}
+	if(b % a == 0) {
+		return b;
+	}
+	return a * b;
+}
+
+public class Main {
+
+   
+ 
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        sc.nextLine(); // Consumir a linha em branco pendente ou use sc.next() para consumir o número em uma linha separada
+
+        for (int i = 0; i < N; i++) {
+            String linha = sc.nextLine(); // Lê a linha completa
+            Scanner linhaScanner = new Scanner(linha); // Crie um novo Scanner para a linha
+            int V1 = linhaScanner.nextInt();
+            int V2 = linhaScanner.nextInt();
+            int V3 = linhaScanner.nextInt();
+            int V4 = linhaScanner.nextInt();
+            Racional r1 = new Racional(V1, V2);
+            Racional r2 = new Racional(V3, V4);
+            if(linha.contains("=")){
+            Racional r =  
+                }
+    }
+    
+    }
+}
+ 
