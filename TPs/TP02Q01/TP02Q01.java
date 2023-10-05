@@ -1,6 +1,6 @@
-import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 class Jogador {
     private int id;
@@ -92,26 +92,26 @@ class Jogador {
     }
 
     public Jogador clone() {
-        return new Jogador(id, nome, altura, peso, universidade, anoNascimento,
-                cidadeNascimento, estadoNascimento);
+        return new Jogador(id, nome, altura, peso, universidade, anoNascimento, cidadeNascimento, estadoNascimento);
     }
 
-    public void Ler(Scanner scanner, int id) {
-        this.id = id;
-        this.nome = scanner.next();
-        this.altura = scanner.nextInt();
-        this.peso = scanner.nextInt();
-        this.anoNascimento = scanner.nextInt();
-        this.universidade = scanner.next();
-        this.cidadeNascimento = scanner.next();
-        this.estadoNascimento = scanner.next();
+    public void Ler(String idStr, String nome, String alturaStr, String pesoStr, String universidade,
+            String anoNascimentoStr,
+            String cidadeNascimento, String estadoNascimento) {
+        this.id = Integer.parseInt(idStr);
+        this.nome = nome;
+        this.altura = Integer.parseInt(alturaStr);
+        this.peso = Integer.parseInt(pesoStr);
+        this.universidade = universidade;
+        this.anoNascimento = Integer.parseInt(anoNascimentoStr);
+        this.cidadeNascimento = cidadeNascimento;
+        this.estadoNascimento = estadoNascimento;
     }
 
     public void Imprimir() {
-        System.out.println("[" + id + "##" + nome + "##" + altura + "##" + peso + "##" + anoNascimento + "##"
-                + universidade + "##" + cidadeNascimento + "##" + estadoNascimento + "]");
+        System.out.println("[" + id + " ## " + nome + " ## " + altura + " ## " + peso + " ## " + anoNascimento + " ## "
+                + universidade + " ## " + cidadeNascimento + " ## " + estadoNascimento + "]");
     }
-
 }
 
 public class TP02Q01 {
@@ -122,43 +122,128 @@ public class TP02Q01 {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-    Scanner sc = new Scanner(System.in);
-    File file = new File("TP02Q01\\Players.txt"); 
-    
-    try {
+        Scanner sc = new Scanner(System.in);
+        File file = new File("/tmp/players.csv");
         Scanner scanner = new Scanner(file);
-    
-    String idStr;
-    Jogador jogador;
-    
-    idStr = sc.next();
-    int idString = Integer.parseInt(idStr);
-    String[] linha = new String[200];
-    int i = 0;
-    linha[i] = scanner.nextLine();
-    try (Scanner sclinha = new Scanner(linha[i])) {
-        for(i = 1; i < 200; i++){
-        linha[i] = scanner.nextLine();
-        
-        int idArq = sclinha.nextInt();
-        while(isFim(idStr) == false){
-            if(idString == idArq){
-            
-            jogador = new Jogador();
-            jogador.Ler(scanner, idArq);
-            jogador.Imprimir();
-            idStr = sc.nextLine();
-            idArq = scanner.nextInt(); 
+
+        String idStr = sc.next();
+        int idInt = Integer.parseInt(idStr);
+        // Cria um objeto Jogador
+        Jogador jogador = new Jogador();
+
+        // Configura o Scanner para usar a vírgula como delimitador
+        scanner.useDelimiter(",");
+
+        // Conta quantas linhas existem no arquivo para determinar o tamanho do vetor
+        int numLinhas = 0;
+        while (scanner.hasNextLine()) {
+            numLinhas++;
+            scanner.nextLine();
+        }
+        scanner.close();
+
+        // Reabre o arquivo para ler as linhas novamente
+        scanner = new Scanner(file);
+        scanner.useDelimiter(",");
+
+        // Cria um vetor de strings com o tamanho correto
+        String[] linhas = new String[numLinhas];
+
+        // Lê e salva cada linha no vetor
+        int i = 0;
+        scanner.nextLine();
+        while (scanner.hasNextLine()) {
+            linhas[i] = scanner.nextLine();
+            i++;
+        }
+        scanner.close();
+
+        // Verifica se idInt é igual a idArq e, se for, chama os métodos da classe
+        // Jogador
+        while (isFim(idStr) == false) {
+            idInt = Integer.parseInt(idStr);
+            for (i = 0; i < linhas.length; i++) {
+                if (linhas[i] != null && !linhas[i].isEmpty()) {
+                    Scanner leitorDeLinha = new Scanner(linhas[i]);
+
+                    leitorDeLinha.useDelimiter(",");
+
+                    // Lê o campo id (pode conter vírgulas)
+                    String idArq = leitorDeLinha.next().replaceAll("\"", "");
+
+                    // Substitui espaços vazios por "nao informado" para campos inteiros
+                    if (idArq.isEmpty()) {
+                        idArq = "nao informado";
+                    }
+
+                    // Separa o campo id em número e nome
+
+                    int idNumero = Integer.parseInt(idArq);
+
+                    // Verifica se o número do ID coincide com o ID fornecido como entrada
+                    if (idNumero == idInt) {
+                        // Restante da leitura dos campos
+                        String nome = "";
+                        String alturaStr = "";
+                        String pesoStr = "";
+                        String universidade = "";
+                        String anoNascimentoStr = "";
+                        String cidadeNascimento = "";
+                        String estadoNascimento = "";
+
+                        if (leitorDeLinha.hasNext()) {
+                            nome = leitorDeLinha.next().replaceAll("\"", "");
+                        }
+                        if (leitorDeLinha.hasNext()) {
+                            alturaStr = leitorDeLinha.next().replaceAll("\"", "");
+                        }
+                        if (leitorDeLinha.hasNext()) {
+                            pesoStr = leitorDeLinha.next().replaceAll("\"", "");
+                        }
+                        if (leitorDeLinha.hasNext()) {
+                            universidade = leitorDeLinha.next().replaceAll("\"", "");
+                        }
+                        if (leitorDeLinha.hasNext()) {
+                            anoNascimentoStr = leitorDeLinha.next().replaceAll("\"", "");
+                        }
+                        if (leitorDeLinha.hasNext()) {
+                            cidadeNascimento = leitorDeLinha.next().replaceAll("\"", "");
+                        }
+                        if (leitorDeLinha.hasNext()) {
+                            estadoNascimento = leitorDeLinha.next().replaceAll("\"", "");
+                        }
+
+                        if (nome.isEmpty()) {
+                            nome = "nao informado";
+                        }
+                        if (alturaStr.isEmpty()) {
+                            alturaStr = "nao informado";
+                        }
+                        if (pesoStr.isEmpty()) {
+                            pesoStr = "nao informado";
+                        }
+                        if (universidade.isEmpty()) {
+                            universidade = "nao informado";
+                        }
+                        if (anoNascimentoStr.isEmpty()) {
+                            anoNascimentoStr = "nao informado";
+                        }
+                        if (cidadeNascimento.isEmpty()) {
+                            cidadeNascimento = "nao informado";
+                        }
+                        if (estadoNascimento.isEmpty()) {
+                            estadoNascimento = "nao informado";
+                        }
+
+                        jogador.Ler(Integer.toString(idNumero), nome, alturaStr, pesoStr, universidade,
+                                anoNascimentoStr,
+                                cidadeNascimento, estadoNascimento);
+
+                        jogador.Imprimir();
+                        idStr = sc.next();
+                    }
+                }
             }
         }
-        }
-        
-        scanner.close();
-        sc.close();
-        sclinha.close();
-        }
-    }finally  {
-        
     }
-        }
 }
